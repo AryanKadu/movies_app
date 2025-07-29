@@ -18,11 +18,18 @@ import EditIcon from '@mui/icons-material/Edit';
 
 export default function MovieCard({movie}) {
   const [isFavorite, setIsFavorite] = React.useState(false);
+  const [imageError, setImageError] = React.useState(false);
   const { image_link, name, director_name, writer_name, imdb_rating, duration, genre } = movie;
 
   const handleFavoriteClick = () => {
     setIsFavorite(!isFavorite);
   };
+
+  const handleImageError = () => {
+    setImageError(true);
+  };
+
+  const fallbackImage = 'https://via.placeholder.com/300x450/6366f1/ffffff?text=No+Image';
 
   return (
     <Grid item xs={12} sm={6} md={4} lg={3}>
@@ -41,8 +48,9 @@ export default function MovieCard({movie}) {
               backgroundSize: 'cover',
               backgroundPosition: 'center',
             }}
-            image={image_link ? image_link : 'https://m.media-amazon.com/images/M/MV5BNDE3ODcxYzMtY2YzZC00NmNlLWJiNDMtZDViZWM2MzIxZDYwXkEyXkFqcGdeQXVyNjAwNDUxODI@._V1_.jpg'}
+            image={`https://m.media-amazon.com/images/M/MV5BNDE3ODcxYzMtY2YzZC00NmNlLWJiNDMtZDViZWM2MzIxZDYwXkEyXkFqcGdeQXVyNjAwNDUxODI@._V1_.jpg`}
             title={name}
+            onError={handleImageError}
           />
           <Box
             sx={{

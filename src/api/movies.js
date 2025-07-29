@@ -1,20 +1,25 @@
 import axios from 'axios';
 import { setGenres, setMovies } from '../slice/movieSlice';
+import { API_CONFIG } from './config';
 
-
- const BaseUrl = 'https://movies-app-api-rs2u.onrender.com/api/movies';
-
-
+const BaseUrl = API_CONFIG.BASE_URL;
 
 
 export const getMovies = () => async dispatch => {
     try {
+        console.log('Fetching movies from:', BaseUrl);
         const {data} = await axios.get(BaseUrl);
 
         dispatch(setMovies(data));
         return data;
     }catch(err) {
         console.error('Error fetching movies:', err);
+        console.error('Error details:', {
+            message: err.message,
+            status: err.response?.status,
+            statusText: err.response?.statusText,
+            url: BaseUrl
+        });
         return err;
     }
 }
@@ -43,8 +48,15 @@ export const getAllGenres = () => async dispatch => {
         dispatch(setGenres(data));
     }catch(err) {
         console.error('Error fetching genres from dedicated endpoint:', err);
+        console.error('Error details:', {
+            message: err.message,
+            status: err.response?.status,
+            statusText: err.response?.statusText,
+            url: `${BaseUrl.replace('/movies', '')}/genres`
+        });
         // Fallback: extract genres from movies data
         try {
+            console.log('Trying fallback: extracting genres from movies data');
             const { data: moviesData } = await axios.get(BaseUrl);
             console.log('Movies data for genre extraction:', moviesData.slice(0, 3));
             const uniqueGenres = [...new Set(moviesData.map(movie => movie.genre).filter(Boolean))];
