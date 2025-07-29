@@ -6,9 +6,7 @@ const GenresTest = () => {
     const testGenresAPI = async () => {
       try {
         const url = 'https://movies-app-api-rs2u.onrender.com/api/genres';
-        console.log('Testing genres API:', url);
         const response = await axios.get(url);
-        console.log('Genres API response:', response.data);
       } catch (error) {
         console.error('Genres API error:', error);
       }

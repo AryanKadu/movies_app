@@ -29,11 +29,11 @@ export default function MovieCard({movie}) {
     setImageError(true);
   };
 
-  const fallbackImage = 'https://via.placeholder.com/300x450/6366f1/ffffff?text=No+Image';
+  const fallbackImage = 'https://m.media-amazon.com/images/M/MV5BNDE3ODcxYzMtY2YzZC00NmNlLWJiNDMtZDViZWM2MzIxZDYwXkEyXkFqcGdeQXVyNjAwNDUxODI@._V1_.jpg';
 
   return (
     <Grid>
-      <Card sx={{ 
+      <Card sx={{
         height: '100%',
         display: 'flex',
         flexDirection: 'column',
@@ -48,7 +48,7 @@ export default function MovieCard({movie}) {
               backgroundSize: 'cover',
               backgroundPosition: 'center',
             }}
-            image={`https://m.media-amazon.com/images/M/MV5BNDE3ODcxYzMtY2YzZC00NmNlLWJiNDMtZDViZWM2MzIxZDYwXkEyXkFqcGdeQXVyNjAwNDUxODI@._V1_.jpg`}
+            image={imageError ? fallbackImage : (image_link || fallbackImage)}
             title={name}
             onError={handleImageError}
           />
