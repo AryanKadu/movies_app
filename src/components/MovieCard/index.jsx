@@ -32,7 +32,7 @@ export default function MovieCard({movie}) {
   const fallbackImage = 'https://via.placeholder.com/300x450/6366f1/ffffff?text=No+Image';
 
   return (
-    <Grid item xs={12} sm={6} md={4} lg={3}>
+    <Grid>
       <Card sx={{ 
         height: '100%',
         display: 'flex',

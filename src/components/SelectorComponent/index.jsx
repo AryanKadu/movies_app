@@ -8,18 +8,14 @@ import { getMoviesByGenres, getMovies } from '../../api/movies';
 import { useDispatch } from 'react-redux';
 import { setSelectedGenre } from '../../slice/movieSlice';
 
-export default function SelectorComponent({name, value}) {
-
+export default function SelectorComponent({ name, value }) {
   const dispatch = useDispatch();
-
   const [SelectedValue, setSelectedValue] = React.useState('');
-
-
 
   const handleChange = (event) => {
     const selectedGenre = event.target.value;
     setSelectedValue(selectedGenre);
-    
+
     if (selectedGenre === 'All' || selectedGenre === '') {
       dispatch(setSelectedGenre(''));
       dispatch(getMovies());
@@ -32,9 +28,9 @@ export default function SelectorComponent({name, value}) {
   return (
     <Box sx={{ minWidth: 140 }}>
       <FormControl fullWidth size="small">
-        <InputLabel 
+        <InputLabel
           id="demo-simple-select-label"
-          sx={{ 
+          sx={{
             color: 'text.secondary',
             '&.Mui-focused': {
               color: 'primary.main'
@@ -64,32 +60,27 @@ export default function SelectorComponent({name, value}) {
             },
           }}
         >
-
-        {
-          name.toLowerCase().includes('genres') && (
+          {name.toLowerCase().includes('genres') && (
             <MenuItem key="all" value="All">
               All Genres
             </MenuItem>
-          )
-        }
-        {
-          value?.length > 0 ? value.map((item, index) => {
-            let displayValue;
-            
-            if (name.toLowerCase().includes('genres')) {
-              // Handle different possible genre data structures
-              displayValue = item.genre || item.name || item.value || item;
-            } else {
-              displayValue = item.ratings || item.rating || item.value || item;
-            }
-            
-            return (
-              <MenuItem key={index} value={displayValue}>
-                {displayValue}
-              </MenuItem>
-            );
-          }) : <MenuItem disabled>No options available</MenuItem>
-        }
+          )}
+          {(Array.isArray(value) && value.length > 0)
+            ? value.map((item, index) => {
+                let displayValue;
+                if (name.toLowerCase().includes('genres')) {
+                  displayValue = item.genre || item.name || item.value || item;
+                } else {
+                  displayValue = item.ratings || item.rating || item.value || item;
+                }
+                return (
+                  <MenuItem key={index} value={displayValue}>
+                    {displayValue}
+                  </MenuItem>
+                );
+              })
+            : <MenuItem disabled>No options available</MenuItem>
+          }
         </Select>
       </FormControl>
     </Box>
